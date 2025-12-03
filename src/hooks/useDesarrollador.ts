@@ -1,88 +1,77 @@
-import { useState } from "react"
+// src/hooks/useDesarrollador.ts
+import { useDesarrolladorStore } from "@/store/desarrollador.store";
+import { useMemo } from "react";
 
-const mockDevelopers = [
-  {
-    id: 1,
-    name: "Juan Pérez García",
-    rut: "12.345.678-9",
-    email: "juan.perez@empresa.com",
-    hireDate: "2022-03-15",
-    experience: 6,
-    projects: 4,
-    status: "active",
-  },
-  {
-    id: 2,
-    name: "María López Rodríguez",
-    rut: "11.222.333-4",
-    email: "maria.lopez@empresa.com",
-    hireDate: "2021-08-20",
-    experience: 8,
-    projects: 5,
-    status: "active",
-  },
-  {
-    id: 3,
-    name: "Carlos Sánchez Torres",
-    rut: "13.456.789-2",
-    email: "carlos.sanchez@empresa.com",
-    hireDate: "2023-01-10",
-    experience: 3,
-    projects: 2,
-    status: "active",
-  },
-  {
-    id: 4,
-    name: "Ana Martínez González",
-    rut: "14.567.890-3",
-    email: "ana.martinez@empresa.com",
-    hireDate: "2020-06-05",
-    experience: 9,
-    projects: 6,
-    status: "inactive",
-  },
-  {
-    id: 5,
-    name: "Roberto Díaz Flores",
-    rut: "15.678.901-4",
-    email: "roberto.diaz@empresa.com",
-    hireDate: "2022-11-12",
-    experience: 5,
-    projects: 3,
-    status: "active",
-  },
-]
+export const useDesarrollador = () => {
+  // 🔹 Obtener desarrolladores y estados de filtros del store
+  const developers = useDesarrolladorStore((s) => s.developers);
+  const searchTerm = useDesarrolladorStore((s) => s.searchTerm);
+  const filterExperience = useDesarrolladorStore((s) => s.filterExperience);
+  const filterStatus = useDesarrolladorStore((s) => s.filterStatus);
+  const filterProjects = useDesarrolladorStore((s) => s.filterProjects);
 
-export const useDesarrollador= () => {
+  // 🔹 Obtener acciones de filtros del store
+  const setSearchTerm = useDesarrolladorStore((s) => s.setSearchTerm);
+  const setFilterExperience = useDesarrolladorStore((s) => s.setFilterExperience);
+  const setFilterStatus = useDesarrolladorStore((s) => s.setFilterStatus);
+  const setFilterProjects = useDesarrolladorStore((s) => s.setFilterProjects);
+  const resetFilters = useDesarrolladorStore((s) => s.resetFilters);
 
-const [searchTerm, setSearchTerm] = useState("")
-  const [filterExperience, setFilterExperience] = useState("all")
-  const [filterStatus, setFilterStatus] = useState("all")
-  const [sortField, setSortField] = useState("name")
+  // 🔹 Calcular desarrolladores filtrados
+  const filteredDevelopers = useMemo(() => {
+    return developers.filter((dev) => {
+      // Filtro por nombre
+      const matchesName = dev.nombre
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
-  const filtered = mockDevelopers.filter((dev) => {
-    const matchesSearch =
-      dev.name.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesExperience =
-      filterExperience === "all" ||
-      (filterExperience === "junior" && dev.experience <= 3) ||
-      (filterExperience === "mid" && dev.experience > 3 && dev.experience <= 7) ||
-      (filterExperience === "senior" && dev.experience > 7)
-    const matchesStatus = filterStatus === "all" || dev.status === filterStatus
-    return matchesSearch && matchesExperience && matchesStatus
-  })
+      // Filtro por estado
+      const matchesStatus =
+        filterStatus === "all"
+          ? true
+          : filterStatus === "active"
+          ? dev.registroActivo === true
+          : dev.registroActivo === false;
+
+      // Filtro por experiencia
+      const experience = dev.aniosExperiencia ?? 0;
+      const matchesExperience =
+        filterExperience === "all"
+          ? true
+          : filterExperience === "junior"
+          ? experience >= 0 && experience <= 3
+          : filterExperience === "mid"
+          ? experience >= 4 && experience <= 7
+          : experience >= 8;
+
+      // Filtro por número de proyectos (si tienes este campo)
+      const projectCount = dev.proyectosAsignados ?? 0;
+      const matchesProjects =
+        filterProjects === "all"
+          ? true
+          : filterProjects === "few"
+          ? projectCount >= 1 && projectCount <= 2
+          : filterProjects === "medium"
+          ? projectCount >= 3 && projectCount <= 4
+          : projectCount >= 5;
+
+      return matchesName && matchesStatus && matchesExperience && matchesProjects;
+    });
+  }, [developers, searchTerm, filterStatus, filterExperience, filterProjects]);
 
   return {
+    // Estados
     searchTerm,
-    setSearchTerm,
     filterExperience,
-    setFilterExperience,
     filterStatus,
-    setFilterStatus,
-    sortField,
-    setSortField,
-    filtered,
-    mockDevelopers
+    filterProjects,
+    filteredDevelopers,
 
-  }
-}
+    // Acciones
+    setSearchTerm,
+    setFilterExperience,
+    setFilterStatus,
+    setFilterProjects,
+    resetFilters,
+  };
+};

@@ -4,23 +4,29 @@ import type { Desarrollador } from "@/types/desarrollador";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-export const useDesarrolladorLogic = () => {
+export const useDesarrolladorLogica = () => {
   const developers = useDesarrolladorStore((s) => s.developers);
   const loading = useDesarrolladorStore((s) => s.loading);
   const reactivateDev = useDesarrolladorStore((s) => s.reactivateDeveloper);
   const deleteDev = useDesarrolladorStore((s) => s.deleteDeveloper);
   const fetchDevelopers = useDesarrolladorStore((s) => s.fetchDevelopers);
-  const navigate = useNavigate();
-  
 
+  const navigate = useNavigate();
+
+  /** Modal de edición */
   const [editOpen, setEditOpen] = useState(false);
   const [selectedDev, setSelectedDev] = useState<Desarrollador | null>(null);
 
+  /** Estado del desarrollador actual (para DetallesDesarrollador) */
+  const [desarrollador, setDesarrollador] = useState<Desarrollador | null>(null);
+
+  /** Abrir modal de edición desde la tabla */
   const openEditModal = (dev: Desarrollador) => {
     setSelectedDev(dev);
     setEditOpen(true);
   };
 
+  /** Eliminar (soft delete) con SweetAlert */
   const handleDelete = async (id: number) => {
     const result = await Swal.fire({
       title: "¿Eliminar desarrollador?",
@@ -46,18 +52,31 @@ export const useDesarrolladorLogic = () => {
     });
   };
 
+  
+  
+
   return {
     developers,
-    handleDelete,
     loading,
-    reactivateDev,
-    deleteDev,
     navigate,
-    setEditOpen,
-    editOpen,
-    selectedDev,
-    fetchDevelopers,
+
+    // Para eliminar y reactivar
+    handleDelete,
+    reactivateDev,
+
+    // Modal editar
     openEditModal,
+    editOpen,
+    setEditOpen,
+    selectedDev,
+
+    // Cargar todos los desarrolladores
+    fetchDevelopers,
+
+    // Para DetallesDesarrollador
+    desarrollador,
+    setDesarrollador,
+
     closeEditModal: () => setEditOpen(false),
   };
 };

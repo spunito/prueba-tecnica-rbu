@@ -6,7 +6,7 @@ export const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-  const token = api_key; // en la prueba probablemente te lo dan fijo
+  const token = api_key; 
   if(!token){
     console.warn("No se encontró el api_key")
   }

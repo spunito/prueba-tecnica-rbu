@@ -1,9 +1,24 @@
-import { useProyectoStore } from "@/store/proyectos.store";
+import { useProyectoLogica } from "@/hooks/useProyectoLogica";
+
 import { Edit, Eye, RotateCcw, Trash2, UsersIcon } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ProyectoEditarModal } from "../../../modals/ProyectoEditarModal";
+import { useProyecto } from "@/hooks/useProyecto";
+
 
 export const ProyectoLista = () => {
-  const projects = useProyectoStore((s) => s.projects);
-  const loading = useProyectoStore((s) => s.loading);
+  const {
+    projects,
+    loading,
+    handleDelete,
+    editOpen,
+    reactivateProj,
+    setEditOpen,
+    selectedProject,
+    openEditModal,
+  } = useProyectoLogica();
+  const { filteredProjects } = useProyecto();
 
   if (loading) return <p className="text-muted-foreground">Cargando proyectos...</p>;
 
@@ -24,16 +39,17 @@ export const ProyectoLista = () => {
           </thead>
 
           <tbody className="divide-y divide-border">
-            {projects.map((proj) => {
+            {filteredProjects.map((proj) => {
               const start = new Date(proj.fechaInicio);
               const end = new Date(proj.fechaTermino);
 
-              const months =
-                Math.max(0, Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 30)));
+              const months = Math.max(
+                0,
+                Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 30))
+              );
 
               return (
                 <tr key={proj.codigoProyecto} className="hover:bg-muted/50 transition-colors">
-                  
                   {/* Nombre */}
                   <td className="px-6 py-4 text-sm font-medium text-foreground">
                     {proj.nombre}
@@ -50,11 +66,9 @@ export const ProyectoLista = () => {
                   </td>
 
                   {/* Duración */}
-                  <td className="px-6 py-4 text-sm text-foreground">
-                    {months} meses
-                  </td>
+                  <td className="px-6 py-4 text-sm text-foreground">{months} meses</td>
 
-                  {/* Desarrolladores asignados (API no entrega este dato aún) */}
+                  {/* Desarrolladores asignados */}
                   <td className="px-6 py-4 text-sm">
                     <span className="inline-flex items-center gap-1 bg-accent/10 text-accent px-2.5 py-1 rounded-full text-xs font-medium">
                       <UsersIcon size={14} />
@@ -78,24 +92,43 @@ export const ProyectoLista = () => {
                   {/* Acciones */}
                   <td className="px-6 py-4 text-sm">
                     <div className="flex items-center gap-2">
-                      <button className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground">
-                        <Eye size={16} />
-                      </button>
+                      {/* Ver Detalles */}
+                      <Button variant="outline" size="icon" asChild>
+                        <Link to={`/proyectos/${proj.codigoProyecto}`}>
+                          <Eye size={16} />
+                        </Link>
+                      </Button>
 
-                      <button className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground">
+                      {/* Editar */}
+                      <button
+                        onClick={() => openEditModal(proj)}
+                        className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground"
+                        title="Editar"
+                      >
                         <Edit size={16} />
                       </button>
 
-                      <button className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground">
+                      {/* Eliminar (Soft Delete) */}
+                      <button
+                        onClick={() => handleDelete(proj.codigoProyecto)}
+                        className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground"
+                        title="Eliminar"
+                      >
                         <Trash2 size={16} />
                       </button>
 
+                      {/* Reactivar (solo si está inactivo) */}
                       {!proj.registroActivo && (
-                        <button className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground">
+                        <button
+                          onClick={() =>reactivateProj(proj.codigoProyecto)}
+                          className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground"
+                          title="Reactivar"
+                        >
                           <RotateCcw size={16} />
                         </button>
                       )}
 
+                      {/* Asignar desarrolladores */}
                       <button
                         className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground"
                         title="Asignar desarrolladores"
@@ -129,6 +162,13 @@ export const ProyectoLista = () => {
           </button>
         </div>
       </div>
+
+      {/* Modal de Edición */}
+      <ProyectoEditarModal
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        project={selectedProject}
+      />
     </div>
   );
 };

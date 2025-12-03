@@ -38,6 +38,6 @@ export const deleteProject = async (id: number): Promise<void> => {
 
 // Reactivar proyecto
 export const reactivateProject = async (id: number): Promise<Proyecto> => {
-  const { data } = await api.patch(`/api/proyectos/${id}/reactivar`);
+  const { data } = await api.put(`/api/proyectos/${id}/reactivar`);
   return data;
 };
