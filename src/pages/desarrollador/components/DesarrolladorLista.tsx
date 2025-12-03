@@ -25,14 +25,14 @@ export const DesarrolladorLista = () => {
     setEditOpen,
   } = useDesarrolladorLogica();
 
-  // 🔹 Obtener desarrolladores filtrados
+  // Obtener desarrolladores filtrados
   const { filteredDevelopers } = useDesarrollador();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [proyectos, setProyectos] = useState<Proyecto[]>([]);
   const [devSeleccionado, setDevSeleccionado] = useState<number | null>(null);
 
-  // 🔵 Traer proyectos cuando abres el modal
+  // Traer proyectos cuando abres el modal
   const abrirModalAsignar = async (devId: number) => {
     setDevSeleccionado(devId);
 
@@ -42,7 +42,7 @@ export const DesarrolladorLista = () => {
     setModalOpen(true);
   };
 
-  // 🟢 Asignar proyecto seleccionado
+  //Asignar proyecto seleccionado
   const asignarProyecto = async (codigoProyecto: number) => {
     if (!devSeleccionado) return;
 

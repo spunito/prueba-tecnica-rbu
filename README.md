@@ -1,114 +1,175 @@
-Prueba Técnica: Sistema de Gestión de Desarrolladores y 
-Proyectos 
+# Prueba Técnica — Gestión de Proyectos y Desarrolladores
 
-## Descripción General 
-  Desarrollar una aplicación web (front-end) que permita gestionar desarrolladores y 
-  proyectos, con funcionalidades CRUD completas para ambas entidades y la 
-  posibilidad de asignar desarrolladores a proyectos. 
+Aplicación web creada para gestionar desarrolladores y proyectos, permitiendo:
 
-## Requisitos Técnicos 
-  Obligatorios: 
-  • Frontend: ReactJS + TypeScript (Se recomienda usar Vite como bundler) 
-  • Estilos: TailwindCSS 
-  Opcionales (suman puntos adicionales): 
-  • Componentes UI: ShadCN 
-  • Manejo de estado global: Zustand 
-  • Fetching de datos: React Query (TanStack Query) 
+- Crear, editar, eliminar y reactivar desarrolladores y proyectos.
+- Asignar y desasignar desarrolladores a proyectos.
+- Visualizar detalle individual de cada entidad.
+- Filtrar proyectos por nombre, estado, fecha y cantidad de desarrolladores.
+- Arquitectura modular con hooks, stores globales y separación clara de responsabilidades.
 
-## Contexto del Problema 
+## Tecnologías Utilizadas
 
-  En una empresa de desarrollo de software, los desarrolladores pueden ser asignados 
-  a múltiples proyectos simultáneamente. Tanto los desarrolladores como los 
-  proyectos pueden ser activados o desactivados (soft delete) en el sistema. 
-  Funcionalidades Requeridas 
-1. Gestión de Desarrolladores 
-  • Listar desarrolladores en una tabla con las siguientes columnas: 
-  o Nombre completo 
-  o RUT 
-  o Correo electrónico 
-  o Fecha de contratación 
-  o Años de experiencia 
-  o Cantidad de proyectos asignados 
-  o Estado (Activo/Inactivo) 
-  o Acciones (Ver detalles, Editar, Eliminar, Reactivar, Asignar a proyecto) 
-  • Crear desarrolladores mediante un formulario con validaciones adecuadas 
-  • Editar información de desarrolladores existentes 
-  • Eliminar desarrolladores (soft delete - cambio de estado) 
-  • Reactivar desarrolladores previamente desactivados 
-  • Ver detalles de cada desarrollador, incluyendo sus proyectos asignados 
+- React + TypeScript
+- Zustand (estado global)
+- React Router DOM
+- Axios (cliente HTTP)
+- TailwindCSS + componentes propios
+- SweetAlert2 (notificaciones)
+- Arquitectura basada en módulos (`api/`, `hooks/`, `store/`, `pages/`, `modals/`)
 
-2. Gestión de Proyectos 
-  • Listar proyectos en una tabla con las siguientes columnas: 
-  o Nombre del proyecto 
-  o Fecha de inicio 
-  o Fecha de término 
-  o Cantidad de desarrolladores asignados 
-  o Estado (Activo/Inactivo) 
-  o Acciones (Ver detalles, Editar, Eliminar, Reactivar, Gestionar 
-  asignaciones) 
-  • Crear proyectos mediante un formulario con validaciones 
-  • Editar información de proyectos existentes 
-  • Eliminar proyectos (soft delete - cambio de estado) 
-  • Reactivar proyectos previamente desactivados 
-  • Ver detalles de cada proyecto, incluyendo la lista de desarrolladores 
-  asignados 
+## Instalación y Ejecución
 
-3. Gestión de Asignaciones 
-  • Asignar desarrolladores a proyectos 
-  • Desasignar desarrolladores de proyectos 
-  • Visualizar las asignaciones actuales tanto en el detalle del desarrollador 
-  como en el del proyecto 
+### 1. Clonar repositorio
 
-4. Filtros y Búsqueda 
-  • Implementar filtros para ambas tablas: 
-  o Desarrolladores: por nombre, nivel de experiencia, estado, número de 
-  proyectos asignados 
-  o Proyectos: por nombre, fechas, estado, número de desarrolladores 
-  asignados 
+```bash
+git clone https://github.com/usuario/prueba-tecnica.git
+cd prueba-tecnica
+```
 
-## Requerimientos de UI/UX 
-  • Diseño intuitivo y responsivo 
-  • Feedback visual para las acciones del usuario (confirmaciones, alertas, etc.) 
-  • Transiciones suaves entre vistas 
-  • Formularios con validación en tiempo real 
-  • Indicadores de carga durante operaciones asíncronas 
+### 2. Instalar dependencias
 
-## API y Comunicación 
-  En el archivo ENDPOINTS.md entregado se encuentran todos los endpoints 
-  necesarios para realizar las peticiones a la API 
-  Se necesita el uso del header Authorization: Bearer TOKEN_OTORGADO para poder 
-  consumir correctamente cada endpoint. 
-  La URL de la API es: https://pruebas2.rbu.cl 
+```bash
+npm install
+```
 
-Entregables 
-1. Repositorio de código en GitHub 
-2. README con: 
-o Instrucciones de instalación y ejecución 
-o Descripción de la arquitectura 
-o Decisiones técnicas 
-o Consideraciones adicionales (de ser necesario) 
-o Enlace de demostración (de ser el caso) 
-3. Aplicación desplegada (opcional, suma puntos) 
-Criterios de Evaluación 
-1. Calidad del código (30%) 
-o Estructura y organización del proyecto 
-o Uso adecuado de TypeScript (tipado, interfaces, etc.) 
-o Clean code y patrones de desarrollo 
-o Manejo de errores 
-2. Funcionalidad (35%) 
-o Implementación correcta de todas las funcionalidades requeridas 
-o Integración adecuada con la API 
-o Manejo efectivo del estado de la aplicación 
-3. Experiencia de usuario (20%) 
-o Diseño intuitivo y atractivo 
-o Usabilidad y accesibilidad 
-o Responsive design 
-o Feedback visual adecuado 
-4. Uso de tecnologías recomendadas (15%) 
-o Implementación correcta de TailwindCSS 
-o Uso efectivo de las tecnologías opcionales (ShadCN, Zustand, React 
-Query) 
-Tiempo de Entrega 
-El candidato tendrá 3 días calendario desde la recepción de estas instrucciones para 
-completar la prueba técnica. 
-¡Buena suerte!
+### 3. Configurar variables de entorno
+
+Si tu API requiere variables como `VITE_API_URL`, crea un archivo `.env`:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+### 4. Ejecutar en desarrollo
+
+```bash
+npm run dev
+```
+
+### 5. Construir para producción
+
+```bash
+npm run build
+```
+
+## Arquitectura del Proyecto
+
+```
+src/
+│── api/
+│   ├── desarrollador.api.ts
+│   ├── proyectos.api.ts
+│   └── asignaciones.api.ts
+│
+│── components/
+│── hooks/
+│   ├── useDesarrolladorLogica.ts
+│   └── useProyecto.ts
+│
+│── modals/
+│── pages/
+│   ├── desarrollador/
+│   └── proyectos/
+│
+│── store/
+│   ├── desarrollador.store.ts
+│   └── proyectos.store.ts
+│
+└── types/
+```
+
+### Explicación rápida
+
+- **api/** → Toda la comunicación con el backend usando Axios
+- **store/** → Estado global con Zustand, un store por módulo
+- **hooks/** → Encapsulan la lógica reutilizable (CRUD, acciones, filtros)
+- **modals/** → Formularios de creación/edición
+- **pages/** → Vistas principales
+- **components/** → UI reutilizable
+
+## Decisiones Técnicas
+
+### Zustand como manejador de estado
+
+Se eligió Zustand por ser:
+
+- Muy liviano
+- Fácil de escalar
+- Ideal para proyectos modulares
+- API simple y predecible
+
+### API modularizada
+
+Cada entidad posee su propio archivo `*.api.ts`, lo que permite:
+
+- Separación clara entre UI y lógica de datos
+- Reutilización
+- Testeo más fácil
+
+### Hooks personalizados
+
+Ejemplos:
+
+- `useDesarrolladorLogica` → eliminar, editar, reactivar, navegación, modales
+- `useProyecto` → filtros (search, estado, fechas, desarrolladores)
+
+Esto reduce lógica de las vistas y mejora la mantenibilidad.
+
+### Interfaz consistente y mínima
+
+Tailwind + componentes reutilizables permiten:
+
+- Diseño limpio
+- Rápida iteración
+- Estilos consistentes en toda la app
+
+### SweetAlert2 para UX clara
+
+Confirmaciones visuales para acciones sensibles (eliminar/desasignar) evitando errores del usuario.
+
+## Endpoints Integrados
+
+### Desarrolladores
+
+- `GET /api/desarrolladores`
+- `POST /api/desarrolladores`
+- `PUT /api/desarrolladores/:codigoDesarrollador`
+- `DELETE /api/desarrolladores/:codigoDesarrollador`
+- `PUT /api/desarrolladores/:codigoDesarrollador/reactivar`
+
+### Proyectos
+
+- `GET /api/proyectos`
+- `POST /api/proyectos`
+- `DELETE /api/proyectos/:codigoProyecto`
+- `PUT /api/proyectos/:codigoProyecto/reactivar`
+
+
+### Asignaciones
+
+- `POST /api/proyectos/:codigoProyecto/desarrolladores/:codigoDesarrollador`
+- `DELETE /api/proyectos/:codigoProyecto/desarrolladores/:codigoDesarrollador`
+- `GET /api/proyectos/:codigoProyecto/desarrolladores`
+
+## Funcionalidades Implementadas
+
+- CRUD completo de desarrolladores con modal, edición inline y soft delete + reactivación.
+- CRUD completo de proyectos con datos principales + cálculo automático de duración.
+- Asignación de desarrolladores desde lista de Desarrolladores y detalle de Desarrollador.
+- Desasignación desde Detalle de Proyecto incluye confirmación con SweetAlert2.
+- Filtros completos en proyectos: búsqueda por nombre, estados (activo/inactivo), fecha y rango de cantidad de desarrolladores.
+
+## Enlace de demostración
+
+Deploy en Vercel/Netlify: [https://mi-app-prueba-tecnica.vercel.app/](https://mi-app-prueba-tecnica.vercel.app/)
+
+## Autor
+
+**Axel Andrés Muñoz Abarca**
+
+Desarrollador Frontend / Full Stack
+
+- Email: axel.munoz@example.com
+- LinkedIn: [https://www.linkedin.com/in/axel-munoz/](https://www.linkedin.com/in/axel-munoz/)
+- GitHub: [https://github.com/axel-munoz](https://github.com/axel-munoz)

@@ -15,7 +15,7 @@ export const DesarrolladorFiltro = () => {
     resetFilters,
   } = useDesarrollador();
 
-  // 🔹 Verificar si hay filtros activos
+  // Verificar si hay filtros activos
   const hasActiveFilters =
     searchTerm !== "" ||
     filterExperience !== "all" ||
@@ -40,7 +40,7 @@ export const DesarrolladorFiltro = () => {
 
       {/* Grid de filtros */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* 🔹 Búsqueda por nombre */}
+        {/* Búsqueda por nombre */}
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">
             Búsqueda
@@ -60,7 +60,7 @@ export const DesarrolladorFiltro = () => {
           </div>
         </div>
 
-        {/* 🔹 Filtro por experiencia */}
+        {/* Filtro por experiencia */}
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">
             Experiencia
@@ -77,7 +77,7 @@ export const DesarrolladorFiltro = () => {
           </select>
         </div>
 
-        {/* 🔹 Filtro por estado */}
+        {/* Filtro por estado */}
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">
             Estado
@@ -93,7 +93,7 @@ export const DesarrolladorFiltro = () => {
           </select>
         </div>
 
-        {/* 🔹 Filtro por número de proyectos */}
+        {/* Filtro por número de proyectos */}
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">
             Número de proyectos
@@ -111,7 +111,7 @@ export const DesarrolladorFiltro = () => {
         </div>
       </div>
 
-      {/* 🔹 Indicador de resultados */}
+      {/* Indicador de resultados */}
       {hasActiveFilters && (
         <div className="text-xs text-muted-foreground">
           Filtros activos aplicados
