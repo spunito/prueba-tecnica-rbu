@@ -162,7 +162,7 @@ Confirmaciones visuales para acciones sensibles (eliminar/desasignar) evitando e
 
 ## Enlace de demostración
 
-Deploy en Vercel/Netlify: [https://mi-app-prueba-tecnica.vercel.app/](https://mi-app-prueba-tecnica.vercel.app/)
+Deploy en Vercel/Netlify: [https://prueba-tecnica-jvddz98jf-axel-munozs-projects.vercel.app/proyectos](https://prueba-tecnica-jvddz98jf-axel-munozs-projects.vercel.app/proyectos)
 
 ## Autor
 
@@ -170,9 +170,9 @@ Deploy en Vercel/Netlify: [https://mi-app-prueba-tecnica.vercel.app/](https://mi
 
 Desarrollador Frontend / Full Stack
 
-- Email: axel.munoz@example.com
-- LinkedIn: [https://www.linkedin.com/in/axel-munoz/](https://www.linkedin.com/in/axel-munoz/)
-- GitHub: [https://github.com/axel-munoz](https://github.com/axel-munoz)
+- Email: axelmunozabarca@gmail.com
+- LinkedIn: [https://www.linkedin.com/in/axel-munoz-abarca/](https://www.linkedin.com/in/axel-munoz-abarca/)
+- GitHub: [https://github.com/spunito](https://github.com/spunito)
 
 ## ¿Que falto?
 
