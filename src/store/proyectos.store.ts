@@ -16,8 +16,6 @@ import {
   getDesarrolladoresDeProyecto,
 } from "@/api/asignaciones.api";
 
-import type { Desarrollador } from "@/types/desarrollador";
-
 // 🔹 Extiende el tipo ProyectoState para incluir los filtros
 interface ProyectoStateExtended extends ProyectoState {
   // Estados de filtros
