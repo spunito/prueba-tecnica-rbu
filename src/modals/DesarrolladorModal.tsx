@@ -5,13 +5,18 @@ import { useForm } from "react-hook-form";
 import { useDesarrolladorStore } from "@/store/desarrollador.store";
 import type { Desarrollador } from "../types/desarrollador";
 
+type DesarrolladorFormData = Omit<Desarrollador, "codigoDesarrollador" | "registroActivo">;
+
 export const DesarrolladorModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const addDeveloper = useDesarrolladorStore((s) => s.addDeveloper);
-  const { register, handleSubmit, reset } = useForm<Partial<Desarrollador>>();
-
-  const onSubmit = async (data: Partial<Desarrollador>) => {
-    data.fechaContratacion = data.fechaContratacion + "T00:00:00";
-    await addDeveloper(data);
+  const { register, handleSubmit, reset } = useForm<DesarrolladorFormData>();
+  
+  const onSubmit = async (data: DesarrolladorFormData) => {
+    const formattedData = {
+      ...data,
+      fechaContratacion: data.fechaContratacion + "T00:00:00"
+    };
+    await addDeveloper(formattedData);
     reset();
     onClose();
   };
@@ -63,4 +68,3 @@ export const DesarrolladorModal = ({ open, onClose }: { open: boolean; onClose: 
     </Dialog>
   );
 };
-

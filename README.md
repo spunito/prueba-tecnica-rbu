@@ -173,3 +173,9 @@ Desarrollador Frontend / Full Stack
 - Email: axel.munoz@example.com
 - LinkedIn: [https://www.linkedin.com/in/axel-munoz/](https://www.linkedin.com/in/axel-munoz/)
 - GitHub: [https://github.com/axel-munoz](https://github.com/axel-munoz)
+
+## ¿Que falto?
+
+- No lo pude hacer responsive por falta de tiempo.
+- Mejoras en UI 
+- Se pudo mejorar las funciones
