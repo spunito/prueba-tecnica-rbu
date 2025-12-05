@@ -15,7 +15,7 @@ export const App = () => {
   return (
     <div >
       <Sidebar />
-      <main className="ml-64 p-6">
+      <main className="md:ml-64 p-6">
         <Router />
       </main>
     </div>
